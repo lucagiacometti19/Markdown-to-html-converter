@@ -97,7 +97,7 @@
             // 
             this.convertiToolStripMenuItem.Image = global::MarkdownToHtml.Properties.Resources.Convert_16x;
             this.convertiToolStripMenuItem.Name = "convertiToolStripMenuItem";
-            this.convertiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.convertiToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.convertiToolStripMenuItem.Text = "Converti";
             this.convertiToolStripMenuItem.Click += new System.EventHandler(this.convertiToolStripMenuItem_Click);
             // 
@@ -105,7 +105,7 @@
             // 
             this.pulisciToolStripMenuItem.Image = global::MarkdownToHtml.Properties.Resources.ClearWindowContent_16x;
             this.pulisciToolStripMenuItem.Name = "pulisciToolStripMenuItem";
-            this.pulisciToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pulisciToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.pulisciToolStripMenuItem.Text = "Pulisci";
             this.pulisciToolStripMenuItem.Click += new System.EventHandler(this.pulisciToolStripMenuItem_Click);
             // 
@@ -122,7 +122,7 @@
             // 
             this.HtmlFormattatoToolStripMenuItem.Image = global::MarkdownToHtml.Properties.Resources.HTMLFile_16x;
             this.HtmlFormattatoToolStripMenuItem.Name = "HtmlFormattatoToolStripMenuItem";
-            this.HtmlFormattatoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.HtmlFormattatoToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.HtmlFormattatoToolStripMenuItem.Text = "HTML";
             this.HtmlFormattatoToolStripMenuItem.Click += new System.EventHandler(this.hTMLFormattatoToolStripMenuItem_Click);
             // 
@@ -205,6 +205,7 @@
             this.ClientSize = new System.Drawing.Size(691, 302);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Markdown to Html";

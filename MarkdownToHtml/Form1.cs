@@ -2,12 +2,12 @@
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
+using System.Windows.Forms;
 
 namespace MarkdownToHtml
 {
@@ -21,6 +21,7 @@ namespace MarkdownToHtml
         {
             InitializeComponent();
             markdownFormattedText = "";
+            converter = new Converter();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -64,8 +65,7 @@ namespace MarkdownToHtml
         {
             try
             {
-                converter = new Converter(richTextBoxMarkdown.Text);
-                converter.Convert();
+                converter.Convert(richTextBoxMarkdown.Text);
                 richTextBoxHtml.Text = converter.Html;
             }
             catch { }
@@ -77,7 +77,9 @@ namespace MarkdownToHtml
             {
                 richTextBoxMarkdown.Text = "";
                 richTextBoxHtml.Text = "";
-                markdownFormattedText = string.Empty;
+                markdownFormattedText = "";
+                converter.Text = "";
+                converter.Html = "";
                 GC.Collect();
             }
             catch { }

@@ -26,9 +26,9 @@ namespace MarkdownToHtml
         private bool unorderedListActivated;    //per il controllo dell'attivazione di una lista ordinata
         private bool codeActivated;             //per il controllo dell'attivazione di un blocco di codice
 
-        public Converter(string text)           //costruttore
+        public Converter()           //costruttore
         {
-            Text = text;
+            Text = "";
             Html = "";
             skip = 0;
             boldActivated = false;
@@ -44,8 +44,13 @@ namespace MarkdownToHtml
             codeActivated = false;
         }
 
-        public void Convert()                 //Metodo principale
+        /// <summary>
+        /// Converts the entire text from markdown to html and saves it in the Html property
+        /// </summary>
+        public void Convert(string text)                 //Metodo principale
         {
+            Text = text;
+            Html = "";
             foreach (char item in Text)
             {
                 index++;
@@ -71,7 +76,7 @@ namespace MarkdownToHtml
                 }
                 if (item == '~' && !codeActivated)
                 {
-                    if (ConvertStrikeEmphasis(index, beginningStrike)) { skip = 1; }
+                    if (ConvertStrikeEmphasis()) { skip = 1; }
                     else { Html += item; }
                     continue;
                 }
@@ -165,13 +170,18 @@ namespace MarkdownToHtml
             }
         }
 
-        private bool ConvertStrikeEmphasis(int index, bool beg)              //-->true = ha convertito il tag markdown in html
-        {                                                                         //-->false = NON ha convertito
+        #region Inline styles
+        /// <summary>
+        /// Converts strike inline style to html tags
+        /// </summary>
+        /// <returns>returns true if the conversion has concluded succesfully</returns>
+        private bool ConvertStrikeEmphasis()
+        {                                                                         
             try
             {
                 if (Text[index + 1] == '~')
                 {
-                    if (beg)
+                    if (beginningStrike)
                     {
                         Html += "<strike>";
                         beginningStrike = false;
@@ -188,7 +198,12 @@ namespace MarkdownToHtml
             }
             catch { return false; }
         }
-
+        /// <summary>
+        /// Converts italics and bold inline styles to html tags
+        /// </summary>
+        /// <param name="type">true if it's needed to convert italics inline style, otherwise false</param>
+        /// <param name="activated">true if the html tags have already been written before and therefore are not needed</param>
+        /// <returns>returns true if the conversion has concluded succesfully</returns>
         private bool ConvertItalicsAndBold(bool type, bool activated)
         {
             if (type && !activated)
@@ -215,8 +230,12 @@ namespace MarkdownToHtml
             }
             return activated;
         }
-
-        private int CheckEmphasis(char char_)            //0 = bold  1 = italics 2 = eccezione verificata nel blocco try-catch
+        /// <summary>
+        /// This method is able to recognize the type of inline style
+        /// </summary>
+        /// <param name="char_">The current char</param>
+        /// <returns>returns 0 for bold, 1 for italics and 2 for unhandled exceptions</returns>
+        private int CheckEmphasis(char char_)
         {
             try
             {
@@ -229,7 +248,13 @@ namespace MarkdownToHtml
             }
             catch { return 2; }
         }
+        #endregion
 
+        #region Ordered Lists
+        /// <summary>
+        /// Adds html tags and removes unnecessary parts
+        /// </summary>
+        /// <returns>returns true if the conversion has concluded succesfully</returns>
         private bool ConvertOrderedList(bool activated, char item)
         {
             try                                         //evitare errori di limite di lunghezza della stringa
@@ -263,7 +288,13 @@ namespace MarkdownToHtml
                 return false;
             }
         }
+        #endregion
 
+        #region Unordered Lists
+        /// <summary>
+        /// Adds html tags and removes unnecessary parts
+        /// </summary>
+        /// <returns>returns true if the conversion has concluded succesfully</returns>
         private bool ConvertUnorderedLists(bool activated, char item)
         {
             try                                         //evitare errori di limite di lunghezza della stringa
@@ -290,7 +321,13 @@ namespace MarkdownToHtml
                 return false;
             }
         }
+        #endregion
 
+        #region Blockquote
+        /// <summary>
+        /// Adds html tags and removes unnecessary parts
+        /// </summary>
+        /// <returns>returns true if the conversion has concluded succesfully</returns>
         private bool ConvertBlockquote()
         {
             try
@@ -310,7 +347,13 @@ namespace MarkdownToHtml
                 return false;
             }
         }
+        #endregion
 
+        #region Link
+        /// <summary>
+        /// Gets the URL of the link
+        /// </summary>
+        /// <returns>returns the URL of the link</returns>
         private string GetLinkAddress()
         {
             try
@@ -321,7 +364,10 @@ namespace MarkdownToHtml
             }
             catch { return ""; }
         }
-
+        /// <summary>
+        /// Gets the text of the link
+        /// </summary>
+        /// <returns>returns the text of the link</returns>
         private string GetLinkText()
         {
             try
@@ -332,7 +378,10 @@ namespace MarkdownToHtml
             }
             catch { return ""; }
         }
-
+        /// <summary>
+        /// Gets the lenght of the markdown code of the link, needed to skip useless characters
+        /// </summary>
+        /// <returns>returns the lenght of the markdown code of the link</returns>
         private int GetLinkLenght()
         {
             try
@@ -342,7 +391,10 @@ namespace MarkdownToHtml
             }
             catch { return 0; }
         }
-
+        /// <summary>
+        /// Adds html tags and removes unnecessary parts
+        /// </summary>
+        /// <returns>returns true if the conversion has concluded succesfully</returns>
         private bool ConvertLink()
         {
             try
@@ -365,7 +417,13 @@ namespace MarkdownToHtml
             }
             catch { return false; }
         }
+        #endregion
 
+        #region Images
+        /// <summary>
+        /// Gets the link or path to the image
+        /// </summary>
+        /// <returns>returns the link or the path of the image</returns>
         private string GetImageAddress()
         {
             try
@@ -376,7 +434,10 @@ namespace MarkdownToHtml
             }
             catch { return ""; }
         }
-
+        /// <summary>
+        /// Gets the alt-text of the image
+        /// </summary>
+        /// <returns>returns the alt-text of the image</returns>
         private string GetImageText()
         {
             try
@@ -387,7 +448,10 @@ namespace MarkdownToHtml
             }
             catch { return ""; }
         }
-
+        /// <summary>
+        /// Gets the lenght of the markdown code of the image, needed to skip useless characters
+        /// </summary>
+        /// <returns>returns the lenght of the markdown code of the image</returns>
         private int GetImageLenght()
         {
             try
@@ -397,7 +461,10 @@ namespace MarkdownToHtml
             }
             catch { return 0; }
         }
-
+        /// <summary>
+        /// Adds html tags and removes unnecessary parts
+        /// </summary>
+        /// <returns>returns true if the conversion has concluded succesfully</returns>
         private bool ConvertImage()
         {
             try
@@ -421,7 +488,13 @@ namespace MarkdownToHtml
             catch { return false; }
 
         }
+        #endregion
 
+        #region Code
+        /// <summary>
+        /// Adds html tags and removes unnecessary parts
+        /// </summary>
+        /// <returns>returns true if the conversion has concluded succesfully</returns>
         private bool ConvertCode()
         {
             try
@@ -447,10 +520,6 @@ namespace MarkdownToHtml
             }
             catch { return false; }
         }
-
-        private bool ConvertTable()
-        {
-
-        }
+        #endregion
     }
 }

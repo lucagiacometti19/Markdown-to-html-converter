@@ -1,0 +1,60 @@
+# Ciao sono ~~Luca~~
+## Questo testo è in _corsivo_ anche *questo*.
+### Questo invece è in __grassetto__ e **grassetto**.
+Questo è combinato ~~*corsivo sbarrato* e __grassetto sbarrato__~~
+Questo è sia grassetto che corsivo : __*prova*__
+
+1. questa è una lista ordinata
+3. ricorda lo spazio dopo il punto
+44. funziona anche con doppie cifre!
+
+* adesso faccio iniziare una lista non ordinata
++ ricorda che anche qui serve dopo lo spazio dopo il carattere chiave
+- funziona anche questo carattere chiave!
+
+> questo è un blockquote
+> dentro un blockquote si possono inserire _stili_ **markdown**
+
+[qui c'è il testo del link](https://www.google.com)
+
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
+Esempio di blocco di codice:
+'''
+var s = new string.Empty;
+'''
+
+Ora riproviamo il tutto un'altra volta:
+
+Grassetto = **BOLD**, __BOLD__
+Corsivo = _ITALICS_, *ITALICS*
+Rigato = ~~STRIKE~~, ci riprovo ~~QUI~~
+Misto = ~~*corsivoStrike*~~/__~~grassettoStrike~~__/~~__*grassettoCorsivoStrike*__~~
+
+* lista
++ non
+- ordinata
+- funziona
++ in modo
+* corretto
+
+1. lista
+3. ordinata
+87. funziona
+2. in modo
+2. corretto
+
+[Link al mio repository GitHub](https://github.com/lucagiacometti19/Markdown-to-html-converter)
+
+![at text](https://cdn1.iconfinder.com/data/icons/essenstial-ultimate-ui/64/hashtag-128.png "Cancelletto con sfondo verde")
+
+Blocco di codice!
+'''
+while(true)
+{
+	int s = Random(0, 10);
+	if(s != 2)
+		break;
+	else
+		s++;
+}
